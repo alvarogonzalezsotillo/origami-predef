@@ -38,12 +38,6 @@ As an example, this is a fragment of my settings:
 #+begin_src emacs-lisp
 (require 'origami-predef)
 
-(defun origami-predef-gift()
-  "Close some predefined patterns, useful in gift-mode (https://github.com/csrhodes/gift-mode)"
-  (interactive)
-  (origami-predef-apply-patterns "{" ))
-(add-hook 'gift-mode-hook #'origami-predef-gift)
-
 (defun origami-predef-java()
   "Close some predefined patterns, useful in java."
   (interactive)
@@ -55,6 +49,13 @@ As an example, this is a fragment of my settings:
   (interactive)
   (origami-predef-apply-patterns '("create .*table" "create .*view" "begin")))
 (add-hook 'sql-mode-hook #'origami-predef-sql)
+
+
+(defun origami-predef-gift()
+  "Close some predefined patterns, useful in gift-mode (https://github.com/csrhodes/gift-mode)"
+  (interactive)
+  (origami-predef-apply-patterns "{" ))
+(add-hook 'gift-mode-hook #'origami-predef-gift)
 #+end_src
 
 
