@@ -1,0 +1,67 @@
+[[https://melpa.org/#/region-occurrences-highlighter][file:https://melpa.org/packages/origami-predef-badge.svg]]
+
+This emacs package extends the [[https://github.com/gregsexton/origami.el][origami package]] to apply some initial foldings when opening a file, based on tags in the file contents.
+
+* Installation
+Add the file =origami-predef.el= to your =load-path= and require it.
+
+It will be available on MELPA in the near future.
+
+* Basic usage, for every major mode
+1. Enable the mode =origami-predef-global-mode=. This will add a =find-file-hook= that will fold every tagged line.
+2. Tag the lines you need to be initialy folded with ~*origami-this*~. 
+   #+begin_src java
+   public void boringMethod(){ // *origami-this*
+      foo();
+      bar();
+   }
+   #+end_src
+3. Sometimes, the tag can not be placed in the same line you need to be folded. In these cases, ~*origami-next*~ will fold the next line.
+   #+begin_src sh
+   # A very long shell variable with newlines
+   # *origami-next*
+   LOREM="
+     Pellentesque dapibus suscipit ligula.  
+     Donec posuere augue in quam.  
+     Etiam vel tortor sodales tellus ultricies commodo. 
+     Suspendisse potenti.
+     Aenean in sem ac leo mollis blandit. 
+     ...
+   "
+   #+end_src
+
+
+* Per major mode usage
+The function =origami-predef-apply-patters= folds the lines containing arbitrary patterns. This allows to define your custom foldings for each major mode. 
+
+As an example, this is a fragment of my settings:
+#+begin_src emacs-lisp
+(require 'origami-predef)
+
+(defun origami-predef-gift()
+  "Close some predefined patterns, useful in gift-mode (https://github.com/csrhodes/gift-mode)"
+  (interactive)
+  (origami-predef-apply-patterns "{" ))
+(add-hook 'gift-mode-hook #'origami-predef-gift)
+
+(defun origami-predef-java()
+  "Close some predefined patterns, useful in java."
+  (interactive)
+  (origami-predef-apply-patterns '("private .*{" "protected .*{")))
+(add-hook 'java-mode-hook #'origami-predef-java)
+
+(defun origami-predef-sql()
+  "Close some predefined patterns, useful in SQL."
+  (interactive)
+  (origami-predef-apply-patterns '("create .*table" "create .*view" "begin")))
+(add-hook 'sql-mode-hook #'origami-predef-sql)
+#+end_src
+
+
+
+* Customization
+- =origami-predef-strings-fold-this=: list of patterns whose lines will be folded. Defaults to ~*origami-this*~.
+- =origami-predef-strings-fold-next=: list of patterns whose next lines will be folded. Defaults to ~*origami-next*~.
+
+* License
+MIT license, same as [[https://github.com/gregsexton/origami.el/blob/master/origami.el][origami.el]]
