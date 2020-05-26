@@ -83,30 +83,11 @@ PATTERN-OR-PATTERNS is a string or a list of strings to search"
   (origami-predef-apply-patterns origami-predef-strings-fold-this origami-predef-strings-fold-next))
 
 
-(defun origami-predef-apply-patterns (this &optional next-line)
-  "Apply folding to patterns in THIS, NEXT-LINE an "1.0d.
-The folding is performed by origami-hide-element,
-origami-predef--hide-element-next-line and
-origami-hide-parent-element.
-;; The MIT License (MIT)
-
-;; Permission is hereby granted, free of charge, to any person obtaining a copy
-;; of this software and associated documentation files (the "Software"), to deal
-;; in the Software without restriction, including without limitation the rights
-;; to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-;; copies of the Software, and to permit persons to whom the Software is
-;; furnished to do so, subject to the following conditions:
-
-;; The above copyright notice and this permission notice shall be included in
-;; all copies or substantial portions of the Software.
-
-;; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-;; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-;; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-;; AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-;; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-;; THE SOFTWARE.
+(defun origami-predef-apply-patterns (this-line &optional next-line)
+  "Apply folding to patterns in THIS-LINE and NEXT-LINE.
+The folding is performed by origami-predef--hide-element-this-line
+and origami-predef--hide-element-next-line"
+  (origami-predef--match-and-apply this-line #'origami-predef--hide-element-this-line)
   (origami-predef--match-and-apply next-line #'origami-predef--hide-element-next-line))
 
 

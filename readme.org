@@ -19,7 +19,7 @@ It will be available on MELPA in the near future.
 3. Sometimes, the tag can not be placed in the same line you need to be folded. In these cases, ~*origami-next*~ will fold the next line.
    #+begin_src sh
    # A very long shell variable with newlines
-   # *origami-next*
+    # *origami-next*
    LOREM="
      Pellentesque dapibus suscipit ligula.  
      Donec posuere augue in quam.  
