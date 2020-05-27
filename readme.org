@@ -64,3 +64,10 @@ As an example, this is a fragment of my settings:
 These variables can be customized:
 - =origami-predef-strings-fold-this=: list of patterns whose lines will be folded. Defaults to ~*origami-this*~.
 - =origami-predef-strings-fold-next=: list of patterns whose next lines will be folded. Defaults to ~*origami-next*~.
+
+* Other folding packages
+There are some alternatives to this package. From my understanding, none of them allows to initially fold some regions on file opening.
+- [[https://www.emacswiki.org/emacs/FoldingMode][Folding mode]]
+- [[https://www.emacswiki.org/emacs/HideShow][Hide show]]
+- [[https://github.com/gregsexton/origami.el][Origami]], that is used internally in this package
+- [[https://github.com/zenozeng/yafolding.el][Yafolding]]
