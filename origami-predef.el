@@ -1,30 +1,17 @@
-;;; origami-predef.el --- Apply folding when finding (opening) files.  -*- lexical-binding: t; -*-
+;;; origami-predef.el --- Apply folding when finding (opening) files  -*- lexical-binding: t; -*-
 
 ;; Author: Álvaro González Sotillo <alvarogonzalezsotillo@gmail.com>
 ;; URL: https://github.com/alvarogonzalezsotillo/origami-predef
-;; Package-Requires: ((origami "1.0"))
+;; Package-Requires: ((emacs "24") (origami "1.0"))
 ;; Version: 1.0
 ;; Keywords: convenience folding
 
-;; The MIT License (MIT)
+;; This file is not part of GNU Emacs.
 
-;; Permission is hereby granted, free of charge, to any person obtaining a copy
-;; of this software and associated documentation files (the "Software"), to deal
-;; in the Software without restriction, including without limitation the rights
-;; to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-;; copies of the Software, and to permit persons to whom the Software is
-;; furnished to do so, subject to the following conditions:
+;;; License:
 
-;; The above copyright notice and this permission notice shall be included in
-;; all copies or substantial portions of the Software.
+;; GNU General Public License v3.0. See COPYING for details.
 
-;; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-;; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-;; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-;; AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-;; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-;; THE SOFTWARE.
 
 ;;; Commentary:
 
@@ -48,12 +35,12 @@
   :group 'convenience)
 
 (defcustom origami-predef-strings-fold-this '("\\*origami-this\\*")  ; *origami-this*
-  "When found, origami-close-node will the invoked on the same line."
+  "When found, `origami-close-node' will the invoked on the same line."
   :type '(repeat string))
 
 ;;; *origami-next*
 (defcustom origami-predef-strings-fold-next '("\\*origami-next\\*")
-  "When found, origami-close-node will the invoked on the next line."
+  "When found, `origami-close-node' will the invoked on the next line."
   :type '(repeat string))
 
 
@@ -85,8 +72,8 @@ PATTERN-OR-PATTERNS is a string or a list of strings to search"
 
 (defun origami-predef-apply-patterns (this-line &optional next-line)
   "Apply folding to patterns in THIS-LINE and NEXT-LINE.
-The folding is performed by origami-predef--hide-element-this-line
-and origami-predef--hide-element-next-line"
+The folding is performed by `origami-predef--hide-element-this-line'
+and `origami-predef--hide-element-next-line'"
   (origami-predef--match-and-apply this-line #'origami-predef--hide-element-this-line)
   (origami-predef--match-and-apply next-line #'origami-predef--hide-element-next-line))
 
