@@ -43,6 +43,14 @@
   "When found, `origami-close-node' will the invoked on the next line."
   :type '(repeat string))
 
+;;; See origami-hide-overlay
+(defun origami-predef--point-in-folded-overlay ()
+  (interactive)
+  (let* ((overlays (overlays-at (point)))
+         (predicate (lambda (overlay) (overlay-get overlay 'invisible)))
+         (folded-overlay (cl-find-if predicate overlays)))
+    folded-overlay))
+  
 
 (defun origami-predef--match-and-apply (pattern-or-patterns function)
   "Search buffer and apply the FUNCTION on each line.
@@ -52,7 +60,9 @@ PATTERN-OR-PATTERNS is a string or a list of strings to search"
       (dolist (pattern patterns)
         (goto-char (point-min))
         (while (re-search-forward pattern nil t 1)
-          (funcall function))))))
+          (unless (origami-predef--point-in-folded-overlay)
+            (funcall function)))))))
+
 
 (defun origami-predef--hide-element-next-line ()
   "Apply origami-hide-element to the next line of current point."
