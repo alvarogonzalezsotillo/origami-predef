@@ -2,7 +2,7 @@
 
 ;; Author: Álvaro González Sotillo <alvarogonzalezsotillo@gmail.com>
 ;; URL: https://github.com/alvarogonzalezsotillo/origami-predef
-;; Package-Requires: ((emacs "24") (origami "1.0"))
+;; Package-Requires: ((emacs "24.3") (origami "1.0"))
 ;; Version: 1.0
 ;; Keywords: convenience folding
 
@@ -45,7 +45,7 @@
 
 ;;; See origami-hide-overlay
 (defun origami-predef--point-in-folded-overlay ()
-  (interactive)
+  "Check if point is on an already folded overlay."
   (let* ((overlays (overlays-at (point)))
          (predicate (lambda (overlay) (overlay-get overlay 'invisible)))
          (folded-overlay (cl-find-if predicate overlays)))
