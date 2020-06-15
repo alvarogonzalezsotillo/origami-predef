@@ -19,9 +19,33 @@
 ;; The origami package is used to perform the actual folding.
 ;;
 ;; Quick start:
-;; Mark lines to fold with *origami-this*, *origami-next*, then invoke origami-predef-apply.
-;; Use origami-predef-global-mode to apply folding automatically when finding (opening) files.
-;; Use a hook on the major mode to apply custom folding with origami-predef-apply-patterns
+;; Enable the mode origami-predef-global-mode.  This will add a find-file-hook that will fold every tagged line.
+;; Tag the lines you need to be initialy folded with *autofold*.
+;; 
+;;   public void boringMethod(){ // *autofold*
+;;      foo();
+;;      bar();
+;;   }
+;;  
+;; Sometimes, the tag can not be placed in the same line you need to be folded.  In these cases, *autofold:*
+;; will fold the next line.
+;;
+;;   # A very long shell variable with newlines
+;;    # *autofold:*
+;;   LOREM="
+;;     Pellentesque dapibus suscipit ligula.
+;;     Donec posuere augue in quam.
+;;     Etiam vel tortor sodales tellus ultricies commodo.
+;;     Suspendisse potenti.
+;;     Aenean in sem ac leo mollis blandit.
+;;     ...
+;;   "
+;;
+;; The tags can be changed with customize.
+;;
+;; You can invoke =origami-predef-apply= to reset folding to its initial state, according to tagged lines.
+;;
+;; It is possible to define initial folding for each major mode using the mode hook and origami-predef-apply-patterns.
 ;;
 ;; More information at https://github.com/alvarogonzalezsotillo/origami-predef
 
@@ -34,13 +58,13 @@
   "Apply predefined folding when finding (opening) files."
   :group 'convenience)
 
-(defcustom origami-predef-strings-fold-this '("\\*origami-this\\*")  ; *origami-this*
-  "When found, `origami-close-node' will the invoked on the same line."
+(defcustom origami-predef-strings-fold-this '("\\*autofold\\*")  ; *autofold*
+  "When found, `origami-close-node' will be invoked on the same line."
   :type '(repeat string))
 
-;;; *origami-next*
-(defcustom origami-predef-strings-fold-next '("\\*origami-next\\*")
-  "When found, `origami-close-node' will the invoked on the next line."
+;;; *autofold:*
+(defcustom origami-predef-strings-fold-next '("\\*autofold:\\*")
+  "When found, `origami-close-node' will be invoked on the next line."
   :type '(repeat string))
 
 ;;; See origami-hide-overlay
@@ -94,14 +118,9 @@ and `origami-predef--hide-element-next-line'"
   :group 'origami-predef-group
   :global t
   
-  (remove-hook 'find-file-hook #'origami-predef--find-file-hook t)
+  (remove-hook 'find-file-hook #'origami-predef-apply t)
   (when origami-predef-global-mode
-    (add-hook 'find-file-hook #'origami-predef--find-file-hook t)))
-
-(defun origami-predef--find-file-hook ()
-  "Called each time a file is opened."
-  (origami-predef-apply))
-
+    (add-hook 'find-file-hook #'origami-predef-apply t)))
 
 (provide 'origami-predef)
 ;;; origami-predef.el ends here

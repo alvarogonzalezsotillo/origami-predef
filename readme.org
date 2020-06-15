@@ -9,17 +9,17 @@ It will be available on MELPA in the near future.
 
 * Basic usage, for every major mode
 1. Enable the mode =origami-predef-global-mode=. This will add a =find-file-hook= that will fold every tagged line.
-2. Tag the lines you need to be initialy folded with ~*origami-this*~. 
+2. Tag the lines you need to be initialy folded with ~*autofold*~. 
    #+begin_src java
-   public void boringMethod(){ // *origami-this*
+   public void boringMethod(){ // *autofold*
       foo();
       bar();
    }
    #+end_src
-3. Sometimes, the tag can not be placed in the same line you need to be folded. In these cases, ~*origami-next*~ will fold the next line.
+3. Sometimes, the tag can not be placed in the same line you need to be folded. In these cases, ~*autofold:*~ will fold the next line.
    #+begin_src sh
    # A very long shell variable with newlines
-    # *origami-next*
+    # *autofold:*
    LOREM="
      Pellentesque dapibus suscipit ligula.  
      Donec posuere augue in quam.  
@@ -29,44 +29,45 @@ It will be available on MELPA in the near future.
      ...
    "
    #+end_src
-
+4. You can invoke =origami-predef-apply= to reset folding to its initial state, according to tagged lines.
 
 * Per major mode usage
-The function =origami-predef-apply-patters= folds the lines containing arbitrary patterns. This allows to define your custom foldings for each major mode. 
+The function =origami-predef-apply-patterns= folds the lines containing arbitrary patterns. This allows to define your custom foldings for each major mode. 
 
 As an example, this is a fragment of my settings:
 #+begin_src emacs-lisp
-(require 'origami-predef)
+(use-package origami-predef
+  :config
 
-(defun origami-predef-java()
-  "Close some predefined patterns, useful in java."
-  (interactive)
-  (origami-predef-apply-patterns '("private .*{" "protected .*{")))
-(add-hook 'java-mode-hook #'origami-predef-java)
+  (defun origami-predef-java()
+    "Close some predefined patterns, useful in java."
+    (interactive)
+    (origami-predef-apply-patterns '("private .*{" "protected .*{")))
+  (add-hook 'java-mode-hook #'origami-predef-java)
 
-(defun origami-predef-sql()
-  "Close some predefined patterns, useful in SQL."
-  (interactive)
-  (origami-predef-apply-patterns '("create .*table" "create .*view" "begin")))
-(add-hook 'sql-mode-hook #'origami-predef-sql)
+  (defun origami-predef-sql()
+    "Close some predefined patterns, useful in SQL."
+    (interactive)
+    (origami-predef-apply-patterns '("create .*table" "create .*view" "begin")))
+  (add-hook 'sql-mode-hook #'origami-predef-sql)
 
 
-(defun origami-predef-gift()
-  "Close some predefined patterns, useful in gift-mode (https://github.com/csrhodes/gift-mode)"
-  (interactive)
-  (origami-predef-apply-patterns "{" ))
-(add-hook 'gift-mode-hook #'origami-predef-gift)
+  (defun origami-predef-gift()
+    "Close some predefined patterns, useful in gift-mode (https://github.com/csrhodes/gift-mode)"
+    (interactive)
+    (origami-predef-apply-patterns "{" ))
+  (add-hook 'gift-mode-hook #'origami-predef-gift))
 #+end_src
 
 
 
 * Customization
 These variables can be customized:
-- =origami-predef-strings-fold-this=: list of patterns whose lines will be folded. Defaults to ~*origami-this*~.
-- =origami-predef-strings-fold-next=: list of patterns whose next lines will be folded. Defaults to ~*origami-next*~.
+- =origami-predef-strings-fold-this=: list of patterns whose lines will be folded. Defaults to ~*autofold*~.
+- =origami-predef-strings-fold-next=: list of patterns whose next lines will be folded. Defaults to ~*autofold:*~.
 
 * Other folding packages
-There are some alternatives to this package. From my understanding, none of them allows to initially fold some regions on file opening.
+There are some packages that implements folding on buffer contents. From my understanding, none of them allows to initially fold some regions on file opening.
 - [[https://www.emacswiki.org/emacs/FoldingMode][Folding mode]]
 - [[https://www.emacswiki.org/emacs/HideShow][Hide show]]
 - [[https://github.com/gregsexton/origami.el][Origami]], that is used internally in this package
