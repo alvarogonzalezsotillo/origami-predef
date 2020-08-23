@@ -1,4 +1,4 @@
-[[https://melpa.org/#/region-occurrences-highlighter][file:https://melpa.org/packages/origami-predef-badge.svg]]
+[[https://melpa.org/#/origami-predef][file:https://melpa.org/packages/origami-predef-badge.svg]]
 
 This emacs package extends the [[https://github.com/gregsexton/origami.el][origami package]] to apply some initial foldings when opening a file, based on tags in the file contents.
 
